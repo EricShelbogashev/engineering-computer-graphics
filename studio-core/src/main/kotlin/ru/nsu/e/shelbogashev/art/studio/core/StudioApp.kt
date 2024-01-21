@@ -56,5 +56,6 @@ class StudioApp private constructor(
         }
         screens.remove(screen)
         onScreenStateChanged.invoke(screen, ScreenAction.CLOSE)
+        screen.close()
     }
 }
