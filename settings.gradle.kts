@@ -4,3 +4,4 @@ plugins {
 rootProject.name = "engineering-computer-graphics"
 include("studio-core")
 include("paint")
+include("paint2")
