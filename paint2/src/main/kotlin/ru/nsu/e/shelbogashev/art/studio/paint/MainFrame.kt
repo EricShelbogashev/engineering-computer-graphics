@@ -4,6 +4,7 @@ import ru.nsu.e.shelbogashev.art.studio.paint.frames.LoadFrame
 import ru.nsu.e.shelbogashev.art.studio.paint.frames.OptionsPanel
 import ru.nsu.e.shelbogashev.art.studio.paint.frames.SaveFrame
 import ru.nsu.e.shelbogashev.art.studio.paint.support.IconResource
+import ru.nsu.e.shelbogashev.art.studio.paint.support.StringResource
 import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Dimension
@@ -11,6 +12,8 @@ import java.awt.event.ActionEvent
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.io.IOException
+import java.util.*
+import java.util.stream.Stream
 import javax.swing.*
 
 class MainFrame : JFrame("Paint") {
@@ -20,7 +23,6 @@ class MainFrame : JFrame("Paint") {
     private val optionsPanel: OptionsPanel
 
     private val anyColorButton: JButton
-    private val curToolButton: JButton
 
     private val penItem: JRadioButtonMenuItem
     private val lineItem: JRadioButtonMenuItem
@@ -28,6 +30,27 @@ class MainFrame : JFrame("Paint") {
     private val starItem: JRadioButtonMenuItem
     private val fillItem: JRadioButtonMenuItem
     private val eraserItem: JRadioButtonMenuItem
+
+    private var locale = Locale.of("ru")
+
+    private fun buildToolbarButton(
+        icon: Icon? = null,
+        toolTipText: String? = null,
+        background: Color? = null
+    ): JButton {
+        val size = Dimension(28, 24)
+        val button = JButton().apply {
+            isFocusPainted = false
+            preferredSize = size
+            maximumSize = size
+            isOpaque = true
+            isBorderPainted = false
+            this.background = background
+            this.toolTipText = toolTipText
+            this.icon = icon
+        }
+        return button
+    }
 
     init {
         defaultCloseOperation = DO_NOTHING_ON_CLOSE
@@ -52,84 +75,53 @@ class MainFrame : JFrame("Paint") {
         val starIcon = IconResource.STAR.loadIcon()
         val fillIcon = IconResource.FILL.loadIcon()
         val anyColorIcon = IconResource.ANY_COLOR.loadIcon()
-        val polygonIcon = IconResource.POLYGON.loadIcon()
-        val backIcon = IconResource.BACK.loadIcon()
+        val regularIcon = IconResource.REGULAR.loadIcon()
+        val undoIcon = IconResource.BACK.loadIcon()
         val bookIcon = IconResource.BOOK.loadIcon()
 
-        /*TOOLBAR SECTION*/
-        val toolBar = JToolBar()
-        toolBar.isFloatable = false
-        toolBar.isRollover = false
-        toolBar.isVisible = true
+        // TOOLBAR SECTION
+        val toolBar = JToolBar().apply {
+            isFloatable = false
+            isRollover = false
+            isVisible = true
+        }
 
         add(toolBar, BorderLayout.NORTH)
 
-        val options = JButton(optionsIcon)
-        options.isFocusPainted = false
-        toolBar.add(options)
+        val options = buildToolbarButton(optionsIcon, StringResource.loadString("canvas_button_options", locale))
+        val cleanField = buildToolbarButton(cleanIcon, StringResource.loadString("canvas_button_clear_all", locale))
+        val eraser = buildToolbarButton(eraserIcon, StringResource.loadString("canvas_button_eraser", locale))
+        val penTool = buildToolbarButton(penIcon, StringResource.loadString("canvas_button_pen", locale))
+        val lineTool = buildToolbarButton(lineIcon, StringResource.loadString("canvas_button_line", locale))
+        val regularTool = buildToolbarButton(regularIcon, StringResource.loadString("canvas_button_regular", locale))
+        val starTool = buildToolbarButton(starIcon, StringResource.loadString("canvas_button_star", locale))
+        val fillTool = buildToolbarButton(fillIcon, StringResource.loadString("canvas_button_fill", locale))
+        val redColor = buildToolbarButton(background = Color.RED)
+        val greenColor = buildToolbarButton(background = Color.GREEN)
+        val blueColor = buildToolbarButton(background = Color.BLUE)
+        val blackColor = buildToolbarButton(background = Color.BLACK)
+        anyColorButton = buildToolbarButton(anyColorIcon, StringResource.loadString("canvas_button_pallet", locale))
+        val undoButton = buildToolbarButton(undoIcon, StringResource.loadString("canvas_button_undo", locale))
+        val selectedTool = JLabel("selected tool", penIcon, SwingConstants.CENTER)
+        selectedTool.toolTipText = StringResource.loadString("canvas_button_current_tool", locale)
 
-        val cleanField = JButton(cleanIcon)
-        cleanField.isFocusPainted = false
-        toolBar.add(cleanField)
-
-        val eraser = JButton(eraserIcon)
-        eraser.isFocusPainted = false
-        toolBar.add(eraser)
-
-        val penTool = JButton(penIcon)
-        penTool.isFocusPainted = false
-        toolBar.add(penTool)
-
-        val lineTool = JButton(lineIcon)
-        lineTool.isFocusPainted = false
-        toolBar.add(lineTool)
-
-        val polygonTool = JButton(polygonIcon)
-        polygonTool.isFocusPainted = false
-        toolBar.add(polygonTool)
-
-        val starTool = JButton(starIcon)
-        starTool.isFocusPainted = false
-        toolBar.add(starTool)
-
-        val fillTool = JButton(fillIcon)
-        fillTool.isFocusPainted = false
-        toolBar.add(fillTool)
-
-        val redColor = JButton("     ")
-        redColor.isFocusPainted = false
-        redColor.background = Color.RED
-        toolBar.add(redColor)
-
-        val greenColor = JButton("     ")
-        greenColor.isFocusPainted = false
-        greenColor.background = Color.GREEN
-        toolBar.add(greenColor)
-
-        val blueColor = JButton("     ")
-        blueColor.isFocusPainted = false
-        blueColor.background = Color.BLUE
-        toolBar.add(blueColor)
-
-        val blackColor = JButton("     ")
-        blackColor.isFocusPainted = false
-        blackColor.background = Color.BLACK
-        toolBar.add(blackColor)
-
-        anyColorButton = JButton(anyColorIcon)
-        anyColorButton.isFocusPainted = false
-        toolBar.add(anyColorButton)
-
-        val backTool = JButton(backIcon)
-        backTool.isFocusPainted = false
-        toolBar.add(backTool)
-
-        val curToolLabel = JLabel("Tool:")
-        toolBar.add(curToolLabel)
-
-        curToolButton = JButton(penIcon)
-        curToolButton.isFocusPainted = false
-        toolBar.add(curToolButton)
+        Stream.of(
+            options,
+            cleanField,
+            eraser,
+            penTool,
+            lineTool,
+            regularTool,
+            starTool,
+            fillTool,
+            redColor,
+            greenColor,
+            blueColor,
+            blackColor,
+            anyColorButton,
+            undoButton,
+            selectedTool
+        ).forEach(toolBar::add)
 
         /*---------------*/
 
@@ -223,7 +215,7 @@ class MainFrame : JFrame("Paint") {
         /*TOOLBAR ACTION LISTENERS*/
         penTool.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.PEN)
-            curToolButton.icon = penIcon
+            selectedTool.icon = penIcon
 
             penItem.isSelected = true
             lineItem.isSelected = false
@@ -235,7 +227,7 @@ class MainFrame : JFrame("Paint") {
 
         starTool.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.STAR)
-            curToolButton.icon = starIcon
+            selectedTool.icon = starIcon
 
             penItem.isSelected = false
             lineItem.isSelected = false
@@ -245,9 +237,9 @@ class MainFrame : JFrame("Paint") {
             fillItem.isSelected = false
         }
 
-        polygonTool.addActionListener { e: ActionEvent? ->
+        regularTool.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.POLYGON)
-            curToolButton.icon = polygonIcon
+            selectedTool.icon = regularIcon
 
             penItem.isSelected = false
             lineItem.isSelected = false
@@ -259,7 +251,7 @@ class MainFrame : JFrame("Paint") {
 
         lineTool.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.LINE)
-            curToolButton.icon = lineIcon
+            selectedTool.icon = lineIcon
 
             penItem.isSelected = false
             lineItem.isSelected = true
@@ -271,7 +263,7 @@ class MainFrame : JFrame("Paint") {
 
         fillTool.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.FILL)
-            curToolButton.icon = fillIcon
+            selectedTool.icon = fillIcon
 
             penItem.isSelected = false
             lineItem.isSelected = false
@@ -317,7 +309,7 @@ class MainFrame : JFrame("Paint") {
 
         eraser.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.ERASER)
-            curToolButton.icon = eraserIcon
+            selectedTool.icon = eraserIcon
         }
 
         anyColorButton.addActionListener { e: ActionEvent? ->
@@ -326,7 +318,7 @@ class MainFrame : JFrame("Paint") {
             anyColorButton.background = newColor
         }
 
-        backTool.addActionListener { e: ActionEvent? ->
+        undoButton.addActionListener { e: ActionEvent? ->
             field.back()
         }
 
@@ -351,7 +343,7 @@ class MainFrame : JFrame("Paint") {
         /*View Menu action listeners*/
         eraserItem.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.ERASER)
-            curToolButton.icon = eraserIcon
+            selectedTool.icon = eraserIcon
         }
 
         clearItem.addActionListener { e: ActionEvent? ->
@@ -360,27 +352,27 @@ class MainFrame : JFrame("Paint") {
 
         penItem.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.PEN)
-            curToolButton.icon = penIcon
+            selectedTool.icon = penIcon
         }
 
         lineItem.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.LINE)
-            curToolButton.icon = lineIcon
+            selectedTool.icon = lineIcon
         }
 
         polygonItem.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.POLYGON)
-            curToolButton.icon = polygonIcon
+            selectedTool.icon = regularIcon
         }
 
         starItem.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.STAR)
-            curToolButton.icon = starIcon
+            selectedTool.icon = starIcon
         }
 
         fillItem.addActionListener { e: ActionEvent? ->
             field.setPenStyle(DrawField.PenStyle.FILL)
-            curToolButton.icon = fillIcon
+            selectedTool.icon = fillIcon
         }
 
         val widthModel = SpinnerNumberModel(640, 640, 2100, 1)

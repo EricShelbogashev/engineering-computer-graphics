@@ -19,7 +19,7 @@ enum class IconResource(private val path: String) {
     STAR("icon/star.png"),
     FILL("icon/fill.png"),
     ANY_COLOR("icon/palette.png"),
-    POLYGON("icon/polyline.png"),
+    REGULAR("icon/regular.png"),
     BACK("icon/arrow_back.png"),
     BOOK("icon/menu_book.png");
 
