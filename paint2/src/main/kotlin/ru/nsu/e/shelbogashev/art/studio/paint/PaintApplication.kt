@@ -18,7 +18,9 @@ import java.util.stream.Stream
 import javax.swing.*
 
 
-class MainFrame : JFrame("Paint") {
+class PaintApplication : JFrame("Paint") {
+    private val context: Context
+
     private val field: DrawField
     private val saveFrame: SaveFrame
     private val loadFrame: LoadFrame
@@ -55,6 +57,7 @@ class MainFrame : JFrame("Paint") {
     }
 
     init {
+        context = Context(Locale.of("ru"))
         defaultCloseOperation = DO_NOTHING_ON_CLOSE
         setBounds(400, 100, 640, 480)
         minimumSize = Dimension(640, 480)
@@ -62,7 +65,7 @@ class MainFrame : JFrame("Paint") {
         field = DrawField()
         saveFrame = SaveFrame(field)
         loadFrame = LoadFrame(field)
-        optionsPanel = OptionsPanel()
+        optionsPanel = OptionsPanel(context)
 
         field.isVisible = true
         val scrollPane = JScrollPane(field)
@@ -90,22 +93,22 @@ class MainFrame : JFrame("Paint") {
 
         add(toolBar, BorderLayout.NORTH)
 
-        val options = buildToolbarButton(optionsIcon, StringResource.loadString("toolbar_button_options", locale))
-        val cleanField = buildToolbarButton(cleanIcon, StringResource.loadString("toolbar_button_clear_all", locale))
-        val eraser = buildToolbarButton(eraserIcon, StringResource.loadString("toolbar_button_eraser", locale))
-        val penTool = buildToolbarButton(penIcon, StringResource.loadString("toolbar_button_pen", locale))
-        val lineTool = buildToolbarButton(lineIcon, StringResource.loadString("toolbar_button_line", locale))
-        val regularTool = buildToolbarButton(regularIcon, StringResource.loadString("toolbar_button_regular", locale))
-        val starTool = buildToolbarButton(starIcon, StringResource.loadString("toolbar_button_star", locale))
-        val fillTool = buildToolbarButton(fillIcon, StringResource.loadString("toolbar_button_fill", locale))
+        val options = buildToolbarButton(optionsIcon, StringResource.loadString("toolbar_button_hint_options", locale))
+        val cleanField = buildToolbarButton(cleanIcon, StringResource.loadString("toolbar_button_hint_clear_all", locale))
+        val eraser = buildToolbarButton(eraserIcon, StringResource.loadString("toolbar_button_hint_eraser", locale))
+        val penTool = buildToolbarButton(penIcon, StringResource.loadString("toolbar_button_hint_pen", locale))
+        val lineTool = buildToolbarButton(lineIcon, StringResource.loadString("toolbar_button_hint_line", locale))
+        val regularTool = buildToolbarButton(regularIcon, StringResource.loadString("toolbar_button_hint_regular", locale))
+        val starTool = buildToolbarButton(starIcon, StringResource.loadString("toolbar_button_hint_star", locale))
+        val fillTool = buildToolbarButton(fillIcon, StringResource.loadString("toolbar_button_hint_fill", locale))
         val redColor = buildToolbarButton(background = Color.RED)
         val greenColor = buildToolbarButton(background = Color.GREEN)
         val blueColor = buildToolbarButton(background = Color.BLUE)
         val blackColor = buildToolbarButton(background = Color.BLACK)
-        anyColorButton = buildToolbarButton(anyColorIcon, StringResource.loadString("toolbar_button_pallet", locale))
-        val undoButton = buildToolbarButton(undoIcon, StringResource.loadString("toolbar_button_undo", locale))
-        val selectedTool = JLabel("selected tool", penIcon, SwingConstants.CENTER)
-        selectedTool.toolTipText = StringResource.loadString("toolbar_button_current_tool", locale)
+        anyColorButton = buildToolbarButton(anyColorIcon, StringResource.loadString("toolbar_button_hint_pallet", locale))
+        val undoButton = buildToolbarButton(undoIcon, StringResource.loadString("toolbar_button_hint_undo", locale))
+        val selectedTool = JLabel(StringResource.loadString("toolbar_button_current_tool", locale), penIcon, SwingConstants.CENTER)
+        selectedTool.toolTipText = StringResource.loadString("toolbar_button_hint_current_tool", locale)
 
         Stream.of(
             options,
@@ -279,12 +282,17 @@ class MainFrame : JFrame("Paint") {
             field.setWhite()
         }
 
-        options.addActionListener { e: ActionEvent? ->
-            val confirm = JOptionPane.showConfirmDialog(this, optionsPanel, "Options", JOptionPane.OK_CANCEL_OPTION)
+        options.addActionListener {
+            val confirm = JOptionPane.showConfirmDialog(
+                this,
+                optionsPanel,
+                StringResource.loadString("dialogue_options_label", locale),
+                JOptionPane.OK_CANCEL_OPTION
+            )
             if (JOptionPane.OK_OPTION == confirm) {
                 val size = optionsPanel.penSize
                 field.setThickness(size)
-                field.setPolygonParameters(
+                field.setRegularParameters(
                     optionsPanel.angle,
                     optionsPanel.numOfVertices,
                     optionsPanel.bigRadius,
@@ -413,7 +421,7 @@ class MainFrame : JFrame("Paint") {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            MainFrame()
+            PaintApplication()
         }
     }
 }

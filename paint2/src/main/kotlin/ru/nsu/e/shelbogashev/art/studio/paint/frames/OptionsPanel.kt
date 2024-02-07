@@ -1,149 +1,101 @@
 package ru.nsu.e.shelbogashev.art.studio.paint.frames
 
-import java.awt.Dimension
+import ru.nsu.e.shelbogashev.art.studio.paint.Context
+import ru.nsu.e.shelbogashev.art.studio.paint.support.StringResource
+import java.awt.*
 import javax.swing.*
-import javax.swing.event.ChangeEvent
 
-/**
- * Класс OptionsPanel представляет собой JPanel, содержащий различные параметры для приложения рисования.
- */
-class OptionsPanel : JPanel() {
+internal class OptionsPanel(context: Context) : JPanel() {
     private val penSlider: JSlider
-    private val penSizeSpinner: JSpinner
-
     private val vertexSlider: JSlider
-    private val vertexSpinner: JSpinner
-
     private val angleSlider: JSlider
-    private val angleSpinner: JSpinner
-
     private val bigRadiusSlider: JSlider
-    private val bigRadiusSpinner: JSpinner
-
     private val smallRadiusSlider: JSlider
+    private val penSizeSpinner: JSpinner
+    private val vertexSpinner: JSpinner
+    private val angleSpinner: JSpinner
+    private val bigRadiusSpinner: JSpinner
     private val smallRadiusSpinner: JSpinner
 
-    /**
-     * Инициализирует OptionsPanel, настраивая компоненты пользовательского интерфейса и их взаимодействия.
-     */
     init {
-        preferredSize = Dimension(330, 400)
+        preferredSize = Dimension(600, 400)
+        layout = GridBagLayout()
+        val gbc = GridBagConstraints()
 
-        /*ОПЦИИ КАРАНДАША*/
-        val penSize = JLabel("Размер карандаша")
-        add(penSize)
+        gbc.fill = GridBagConstraints.HORIZONTAL
+        gbc.insets = Insets(2, 2, 2, 2) // Optional: adjust spacing between components
 
-        penSlider = JSlider(1, 20)
-        penSlider.maximum = 20
-        penSlider.minimum = 1
-        penSlider.majorTickSpacing = 1
-        penSlider.paintTicks = true
-        penSlider.value = 5
-        add(penSlider)
+        // Pen Size
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_pen_size", context.locale)), 0, 0, 1, gbc)
+        penSlider = createSlider(1, 20, 5, 1)
+        addComponent(penSlider, 0, 1, 1, gbc)
+        penSizeSpinner = createSpinner(SpinnerNumberModel(5, 1, 20, 1), 0, 2, gbc)
 
-        val penSizeSpinnerModel = SpinnerNumberModel(5, 1, 20, 1)
-        penSizeSpinner = JSpinner(penSizeSpinnerModel)
-        add(penSizeSpinner)
+        // Polygon vertices
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_regular_vertices_number", context.locale)), 1, 0, 1, gbc)
+        vertexSlider = createSlider(3, 16, 5, 1)
+        addComponent(vertexSlider, 1, 1, 1, gbc)
+        vertexSpinner = createSpinner(SpinnerNumberModel(5, 3, 16, 1), 1, 2, gbc)
 
-        penSlider.addChangeListener { e: ChangeEvent? ->
-            penSizeSpinner.value = penSlider.value
-        }
+        // Angle
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_rotation_angle", context.locale)), 2, 0, 1, gbc)
+        angleSlider = createSlider(0, 360, 0, 1)
+        addComponent(angleSlider, 2, 1, 1, gbc)
+        angleSpinner = createSpinner(SpinnerNumberModel(0, 0, 360, 1), 2, 2, gbc)
 
-        penSizeSpinner.addChangeListener { e: ChangeEvent? ->
-            if (penSizeSpinner.value as Int > 20) penSizeSpinner.value = 20
-            penSlider.value = (penSizeSpinner.value as Int)
-        }
+        // Big Radius
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_outer_radius", context.locale)), 3, 0, 1, gbc)
+        bigRadiusSlider = createSlider(0, 100, 50, 1)
+        addComponent(bigRadiusSlider, 3, 1, 1, gbc)
+        bigRadiusSpinner = createSpinner(SpinnerNumberModel(50, 0, 100, 1), 3, 2, gbc)
 
-        /*-----------------*/
+        // Small Radius
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_inner_radius", context.locale)), 4, 0, 1, gbc)
+        smallRadiusSlider = createSlider(0, 100, 20, 1)
+        addComponent(smallRadiusSlider, 4, 1, 1, gbc)
+        smallRadiusSpinner = createSpinner(SpinnerNumberModel(20, 0, 100, 1), 4, 2, gbc)
 
-        /*ОПЦИИ МНОГОУГОЛЬНИКА*/
-        val polygonOpt = JLabel("Вершины")
-        add(polygonOpt)
-
-        vertexSlider = JSlider(3, 16)
-        vertexSlider.majorTickSpacing = 1
-        vertexSlider.paintTicks = true
-        vertexSlider.value = 5
-        add(vertexSlider)
-
-        val anglesSpinnerModel = SpinnerNumberModel(5, 3, 16, 1)
-        vertexSpinner = JSpinner(anglesSpinnerModel)
-        add(vertexSpinner)
-
-        vertexSlider.addChangeListener { e: ChangeEvent? ->
-            vertexSpinner.value = vertexSlider.value
-        }
-
-        vertexSpinner.addChangeListener { e: ChangeEvent? ->
-            if (vertexSpinner.value as Int > 16) vertexSpinner.value = 16
-            vertexSlider.value = (vertexSpinner.value as Int)
-        }
-
-        val angle = JLabel("Поворот")
-        add(angle)
-
-        angleSlider = JSlider(0, 360)
-        angleSlider.majorTickSpacing = 1
-        angleSlider.value = 0
-        add(angleSlider)
-
-        val angleModel = SpinnerNumberModel(0, 0, 360, 1)
-        angleSpinner = JSpinner(angleModel)
-        add(angleSpinner)
-
-        angleSlider.addChangeListener { e: ChangeEvent? ->
-            angleSpinner.value = angleSlider.value
-        }
-
-        angleSpinner.addChangeListener { e: ChangeEvent? ->
-            if (angleSpinner.value as Int > 360) angleSpinner.value = 360
-            angleSlider.value = (angleSpinner.value as Int)
-        }
-
-        val radius = JLabel("Радиус1")
-        add(radius)
-
-        bigRadiusSlider = JSlider(0, 100)
-        bigRadiusSlider.majorTickSpacing = 1
-        bigRadiusSlider.value = 50
-        add(bigRadiusSlider)
-
-        val radiusModel = SpinnerNumberModel(50, 0, 100, 1)
-        bigRadiusSpinner = JSpinner(radiusModel)
-        add(bigRadiusSpinner)
-
-        bigRadiusSlider.addChangeListener { e: ChangeEvent? ->
-            bigRadiusSpinner.value = bigRadiusSlider.value
-        }
-
-        bigRadiusSpinner.addChangeListener { e: ChangeEvent? ->
-            if (bigRadiusSpinner.value as Int > 1000) bigRadiusSpinner.value = 100
-            bigRadiusSlider.value = (bigRadiusSpinner.value as Int)
-        }
-
-        val smallRadius = JLabel("Радиус2")
-        add(smallRadius)
-
-        smallRadiusSlider = JSlider(0, 100)
-        smallRadiusSlider.majorTickSpacing = 1
-        smallRadiusSlider.value = 20
-        add(smallRadiusSlider)
-
-        val smallRadiusModel = SpinnerNumberModel(20, 1, 100, 1)
-        smallRadiusSpinner = JSpinner(smallRadiusModel)
-        add(smallRadiusSpinner)
-
-        smallRadiusSlider.addChangeListener { e: ChangeEvent? ->
-            smallRadiusSpinner.value = smallRadiusSlider.value
-        }
-
-        smallRadiusSpinner.addChangeListener { e: ChangeEvent? ->
-            if (smallRadiusSpinner.value as Int > 100) smallRadiusSpinner.value = 100
-            smallRadiusSlider.value = (smallRadiusSpinner.value as Int)
-        }
-
-        /*---------------*/
+        // Setup change listeners
+        setupChangeListeners()
     }
+
+    private fun addComponent(component: Component, row: Int, col: Int, width: Int, gbc: GridBagConstraints) {
+        gbc.gridx = col
+        gbc.gridy = row
+        gbc.gridwidth = width
+        add(component, gbc)
+    }
+
+    private fun createSlider(min: Int, max: Int, value: Int, majorTickSpacing: Int): JSlider {
+        val slider = JSlider(JSlider.HORIZONTAL, min, max, value)
+        slider.majorTickSpacing = majorTickSpacing
+        slider.paintTicks = true
+        return slider
+    }
+
+    private fun createSpinner(model: SpinnerModel, row: Int, col: Int, gbc: GridBagConstraints): JSpinner {
+        val spinner = JSpinner(model)
+        addComponent(spinner, row, col, 1, gbc)
+        return spinner
+    }
+
+    private fun setupChangeListener(slider: JSlider, spinner: JSpinner) {
+        slider.addChangeListener {
+            spinner.value = slider.value
+        }
+        spinner.addChangeListener {
+            slider.value = spinner.value as Int
+        }
+    }
+
+    private fun setupChangeListeners() {
+        setupChangeListener(penSlider, penSizeSpinner)
+        setupChangeListener(vertexSlider, vertexSpinner)
+        setupChangeListener(angleSlider, angleSpinner)
+        setupChangeListener(bigRadiusSlider, bigRadiusSpinner)
+        setupChangeListener(smallRadiusSlider, smallRadiusSpinner)
+    }
+
 
     /**
      * Возвращает размер карандаша.

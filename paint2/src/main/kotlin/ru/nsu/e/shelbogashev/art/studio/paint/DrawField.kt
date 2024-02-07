@@ -3,7 +3,7 @@ package ru.nsu.e.shelbogashev.art.studio.paint
 import mu.KotlinLogging
 import ru.nsu.e.shelbogashev.art.studio.paint.tools.FillTool
 import ru.nsu.e.shelbogashev.art.studio.paint.tools.LineTool
-import ru.nsu.e.shelbogashev.art.studio.paint.tools.PolygonTool
+import ru.nsu.e.shelbogashev.art.studio.paint.tools.RegularTool
 import ru.nsu.e.shelbogashev.art.studio.paint.tools.StarTool
 import java.awt.*
 import java.awt.event.MouseEvent
@@ -29,8 +29,8 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
 
     private val lineTool = LineTool()
     private val fillTool = FillTool()
-    private val starTool = StarTool()
-    private val polygonTool = PolygonTool()
+    private var starTool = StarTool()
+    private var regularTool = RegularTool()
 
     private val startPoint = Point(-1, -1)
     private var prevPoint = Point(-1, -1)
@@ -112,7 +112,7 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
             }
 
             PenStyle.STAR -> starTool.draw(image!!, e.point, currentColor)
-            PenStyle.POLYGON -> polygonTool.draw(image!!, e.point, currentColor)
+            PenStyle.POLYGON -> regularTool.draw(image!!, e.point, currentColor)
             PenStyle.FILL -> fillTool.fill(image!!, e.point, currentColor)
             PenStyle.PEN -> {
                 prevPoint = e.point
@@ -231,15 +231,9 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
      * @param bRadius Больший радиус.
      * @param sRadius Меньший радиус.
      */
-    fun setPolygonParameters(angle: Int, numOfVertices: Int, bRadius: Int, sRadius: Int) {
-        starTool.angleCount = numOfVertices
-        starTool.angle = angle
-        starTool.bigRadius = bRadius
-        starTool.smallRadius = sRadius
-
-        polygonTool.angleCount = numOfVertices
-        polygonTool.angle = angle
-        polygonTool.radius = bRadius
+    fun setRegularParameters(angle: Int, numOfVertices: Int, bRadius: Int, sRadius: Int) {
+        starTool = StarTool(bRadius, sRadius, angle, numOfVertices)
+        regularTool = RegularTool(bRadius, angle, numOfVertices)
     }
 
     /**
