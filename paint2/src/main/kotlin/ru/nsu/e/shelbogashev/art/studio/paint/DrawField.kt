@@ -1,5 +1,6 @@
 package ru.nsu.e.shelbogashev.art.studio.paint
 
+import mu.KotlinLogging
 import ru.nsu.e.shelbogashev.art.studio.paint.tools.FillTool
 import ru.nsu.e.shelbogashev.art.studio.paint.tools.LineTool
 import ru.nsu.e.shelbogashev.art.studio.paint.tools.PolygonTool
@@ -16,6 +17,7 @@ import javax.swing.SwingUtilities
  * Панель для рисования и обработки событий мыши.
  */
 class DrawField : JPanel(), MouseListener, MouseMotionListener {
+    private val logger = KotlinLogging.logger("DrawField")
     private var minWidth = DEFAULT_MIN_WIDTH
     private var minHeight = DEFAULT_MIN_HEIGHT
     private var thickness = DEFAULT_THICKNESS
@@ -90,6 +92,7 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
     }
 
     override fun mouseClicked(e: MouseEvent) {
+        logger.trace { "click action : id=${e.id}, x=${e.x}, y=${e.y}" }
     }
 
     override fun mousePressed(e: MouseEvent) {

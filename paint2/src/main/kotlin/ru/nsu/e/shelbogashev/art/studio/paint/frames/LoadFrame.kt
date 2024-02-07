@@ -22,22 +22,16 @@ class LoadFrame(private val drawField: DrawField) : JFrame() {
      */
     @Throws(IOException::class)
     fun loadImage() {
-        // Создаем диалоговое окно для выбора файла
         val load = FileDialog(this, "Загрузить изображение", FileDialog.LOAD)
         load.file = "*.png; *.jpg; *.jpeg;"
         load.isVisible = true
 
-        // Получаем путь к выбранному файлу с использованием безопасного вызова
         val file: String? = load.directory?.let { directory ->
             load.file?.let { file -> directory + file }
         }
 
-        // Если файл выбран
         if (!file.isNullOrBlank()) {
-            // Читаем изображение из файла
             val newImage: BufferedImage = ImageIO.read(File(file))
-
-            // Устанавливаем изображение в поле рисования
             drawField.setImage(newImage)
         }
     }

@@ -3,6 +3,7 @@ package ru.nsu.e.shelbogashev.art.studio.paint
 import ru.nsu.e.shelbogashev.art.studio.paint.frames.LoadFrame
 import ru.nsu.e.shelbogashev.art.studio.paint.frames.OptionsPanel
 import ru.nsu.e.shelbogashev.art.studio.paint.frames.SaveFrame
+import ru.nsu.e.shelbogashev.art.studio.paint.menu.InstructionDialog
 import ru.nsu.e.shelbogashev.art.studio.paint.support.IconResource
 import ru.nsu.e.shelbogashev.art.studio.paint.support.StringResource
 import java.awt.BorderLayout
@@ -15,6 +16,7 @@ import java.io.IOException
 import java.util.*
 import java.util.stream.Stream
 import javax.swing.*
+
 
 class MainFrame : JFrame("Paint") {
     private val field: DrawField
@@ -88,22 +90,22 @@ class MainFrame : JFrame("Paint") {
 
         add(toolBar, BorderLayout.NORTH)
 
-        val options = buildToolbarButton(optionsIcon, StringResource.loadString("canvas_button_options", locale))
-        val cleanField = buildToolbarButton(cleanIcon, StringResource.loadString("canvas_button_clear_all", locale))
-        val eraser = buildToolbarButton(eraserIcon, StringResource.loadString("canvas_button_eraser", locale))
-        val penTool = buildToolbarButton(penIcon, StringResource.loadString("canvas_button_pen", locale))
-        val lineTool = buildToolbarButton(lineIcon, StringResource.loadString("canvas_button_line", locale))
-        val regularTool = buildToolbarButton(regularIcon, StringResource.loadString("canvas_button_regular", locale))
-        val starTool = buildToolbarButton(starIcon, StringResource.loadString("canvas_button_star", locale))
-        val fillTool = buildToolbarButton(fillIcon, StringResource.loadString("canvas_button_fill", locale))
+        val options = buildToolbarButton(optionsIcon, StringResource.loadString("toolbar_button_options", locale))
+        val cleanField = buildToolbarButton(cleanIcon, StringResource.loadString("toolbar_button_clear_all", locale))
+        val eraser = buildToolbarButton(eraserIcon, StringResource.loadString("toolbar_button_eraser", locale))
+        val penTool = buildToolbarButton(penIcon, StringResource.loadString("toolbar_button_pen", locale))
+        val lineTool = buildToolbarButton(lineIcon, StringResource.loadString("toolbar_button_line", locale))
+        val regularTool = buildToolbarButton(regularIcon, StringResource.loadString("toolbar_button_regular", locale))
+        val starTool = buildToolbarButton(starIcon, StringResource.loadString("toolbar_button_star", locale))
+        val fillTool = buildToolbarButton(fillIcon, StringResource.loadString("toolbar_button_fill", locale))
         val redColor = buildToolbarButton(background = Color.RED)
         val greenColor = buildToolbarButton(background = Color.GREEN)
         val blueColor = buildToolbarButton(background = Color.BLUE)
         val blackColor = buildToolbarButton(background = Color.BLACK)
-        anyColorButton = buildToolbarButton(anyColorIcon, StringResource.loadString("canvas_button_pallet", locale))
-        val undoButton = buildToolbarButton(undoIcon, StringResource.loadString("canvas_button_undo", locale))
+        anyColorButton = buildToolbarButton(anyColorIcon, StringResource.loadString("toolbar_button_pallet", locale))
+        val undoButton = buildToolbarButton(undoIcon, StringResource.loadString("toolbar_button_undo", locale))
         val selectedTool = JLabel("selected tool", penIcon, SwingConstants.CENTER)
-        selectedTool.toolTipText = StringResource.loadString("canvas_button_current_tool", locale)
+        selectedTool.toolTipText = StringResource.loadString("toolbar_button_current_tool", locale)
 
         Stream.of(
             options,
@@ -127,14 +129,14 @@ class MainFrame : JFrame("Paint") {
 
         /*FILE MENUBAR SECTION*/
         val menuBar = JMenuBar()
-        val fileMenu = JMenu("File")
+        val fileMenu = JMenu(StringResource.loadString("menu_file_label", locale))
         menuBar.add(fileMenu)
 
-        val saveItem = JMenuItem("Save")
+        val saveItem = JMenuItem(StringResource.loadString("menu_file_button_save_file", locale))
 
-        val loadItem = JMenuItem("Load")
+        val loadItem = JMenuItem(StringResource.loadString("menu_file_button_open_file", locale))
 
-        val exitItem = JMenuItem("Exit")
+        val exitItem = JMenuItem(StringResource.loadString("menu_file_button_exit", locale))
 
         fileMenu.add(exitItem)
         fileMenu.add(loadItem)
@@ -143,26 +145,26 @@ class MainFrame : JFrame("Paint") {
         /*---------------------*/
 
         /*VIEW MENUBAR SECTION*/
-        val viewMenu = JMenu("View")
+        val viewMenu = JMenu(StringResource.loadString("menu_tools_label", locale))
         menuBar.add(viewMenu)
 
         val tools = ButtonGroup()
 
-        eraserItem = JRadioButtonMenuItem("Eraser")
+        eraserItem = JRadioButtonMenuItem(StringResource.loadString("menu_tools_button_eraser", locale))
 
-        val clearItem = JMenuItem("Clear")
+        val clearItem = JMenuItem(StringResource.loadString("menu_tools_button_clear", locale))
 
-        penItem = JRadioButtonMenuItem("Pen")
+        penItem = JRadioButtonMenuItem(StringResource.loadString("menu_tools_button_pen", locale))
 
-        lineItem = JRadioButtonMenuItem("Line")
+        lineItem = JRadioButtonMenuItem(StringResource.loadString("menu_tools_button_line", locale))
 
-        polygonItem = JRadioButtonMenuItem("Polygon")
+        polygonItem = JRadioButtonMenuItem(StringResource.loadString("menu_tools_button_regular", locale))
 
-        starItem = JRadioButtonMenuItem("Star")
+        starItem = JRadioButtonMenuItem(StringResource.loadString("menu_tools_button_star", locale))
 
-        fillItem = JRadioButtonMenuItem("Fill")
+        fillItem = JRadioButtonMenuItem(StringResource.loadString("menu_tools_button_fill", locale))
 
-        val fieldSize = JMenuItem("Resize")
+        val fieldSize = JMenuItem(StringResource.loadString("menu_tools_button_resize", locale))
 
         viewMenu.add(penItem)
         viewMenu.add(lineItem)
@@ -183,10 +185,10 @@ class MainFrame : JFrame("Paint") {
         /*------------------------*/
 
         /*ABOUT MENUBAR SECTION*/
-        val aboutMenu = JMenu("About")
+        val aboutMenu = JMenu(StringResource.loadString("menu_about_label", locale))
         menuBar.add(aboutMenu)
 
-        val aboutItem = JMenuItem("About")
+        val aboutItem = JMenuItem(StringResource.loadString("menu_about_button_about", locale))
         aboutMenu.add(aboutItem)
 
         /*----------------------*/
@@ -380,13 +382,18 @@ class MainFrame : JFrame("Paint") {
         val heightModel = SpinnerNumberModel(480, 480, 2000, 1)
         val heightField = JSpinner(heightModel)
         val resizePanel = JPanel()
-        resizePanel.add(JLabel("Width: "))
+        resizePanel.add(JLabel(StringResource.loadString("dialogue_resize_button_width", locale)))
         resizePanel.add(widthField)
-        resizePanel.add(JLabel("Height:"))
+        resizePanel.add(JLabel(StringResource.loadString("dialogue_resize_button_height", locale)))
         resizePanel.add(heightField)
 
         fieldSize.addActionListener { e: ActionEvent? ->
-            val confirm = JOptionPane.showConfirmDialog(null, resizePanel, "Resize", JOptionPane.OK_CANCEL_OPTION)
+            val confirm = JOptionPane.showConfirmDialog(
+                null,
+                resizePanel,
+                StringResource.loadString("dialogue_resize_label", locale),
+                JOptionPane.OK_CANCEL_OPTION
+            )
             if (JOptionPane.OK_OPTION == confirm) {
                 field.resizeImage(widthField.value as Int, heightField.value as Int)
                 scrollPane.updateUI()
@@ -394,39 +401,8 @@ class MainFrame : JFrame("Paint") {
         }
 
         aboutItem.addActionListener { e: ActionEvent? ->
-            JOptionPane.showConfirmDialog(
-                null,
-                """Как работать с этой программой:
-
-Кнопка с шестеренками откроет параметры программы. Вы можете установить размер пера, количество вершин для форм, угол (для поворота
-форм) и радиус для форм.
-
-Кнопка с метлой очищает весь холст.
-
-Кнопка с ручкой позволяет вам свободно рисовать. Толщину можно изменить в параметрах.
-
-Кнопка с линией рисует линию. Вам нужно выполнить два клика по холсту: первый клик - начало линии, второй
-клик - конец линии. Толщину можно изменить в параметрах. Если толщина = 1, то линия будет нарисована с
-использованием алгоритма Брезенхема.
-
-Кнопка с многоугольником рисует форму с n вершинами. Количество вершин можно установить в параметрах. Также в параметрах
-можно установить радиус формы (это делает форму больше) и угол, который поворачивает форму.
-
-Кнопка со звездой рисует звезду с n вершинами. Количество вершин можно установить в параметрах. Также в параметрах
-можно установить угол звезды, который ее поворачивает.
-
-Кнопка с ведром заполняет область, по которой вы кликнули, выбранным цветом.
-
-Кнопки с цветами меняют цвет.
-
-Кнопка с палитрой позволяет выбрать любой цвет, который вам нужен.
-
-Кнопка со стрелкой отменяет предыдущий ход.""",
-                "About",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.PLAIN_MESSAGE,
-                bookIcon
-            )
+            val instructionDialog = InstructionDialog(this)
+            instructionDialog.isVisible = true
         }
         /*-----------*/
         this.jMenuBar = menuBar
