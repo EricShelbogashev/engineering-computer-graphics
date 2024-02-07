@@ -1,11 +1,11 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.frames
+package ru.nsu.e.shelbogashev.art.studio.paint.etc.frames
 
-import ru.nsu.e.shelbogashev.art.studio.paint.Context
-import ru.nsu.e.shelbogashev.art.studio.paint.support.StringResource
+import ru.nsu.e.shelbogashev.art.studio.paint.context.ApplicationContext
+import ru.nsu.e.shelbogashev.art.studio.paint.etc.support.StringResource
 import java.awt.*
 import javax.swing.*
 
-internal class OptionsPanel(context: Context) : JPanel() {
+internal class OptionsPanel(context: ApplicationContext) : JPanel() {
     private val penSlider: JSlider
     private val vertexSlider: JSlider
     private val angleSlider: JSlider
@@ -26,31 +26,31 @@ internal class OptionsPanel(context: Context) : JPanel() {
         gbc.insets = Insets(2, 2, 2, 2) // Optional: adjust spacing between components
 
         // Pen Size
-        addComponent(JLabel(StringResource.loadString("dialogue_options_label_pen_size", context.locale)), 0, 0, 1, gbc)
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_pen_size", context.properties.locale)), 0, 0, 1, gbc)
         penSlider = createSlider(1, 20, 5, 1)
         addComponent(penSlider, 0, 1, 1, gbc)
         penSizeSpinner = createSpinner(SpinnerNumberModel(5, 1, 20, 1), 0, 2, gbc)
 
         // Polygon vertices
-        addComponent(JLabel(StringResource.loadString("dialogue_options_label_regular_vertices_number", context.locale)), 1, 0, 1, gbc)
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_regular_vertices_number", context.properties.locale)), 1, 0, 1, gbc)
         vertexSlider = createSlider(3, 16, 5, 1)
         addComponent(vertexSlider, 1, 1, 1, gbc)
         vertexSpinner = createSpinner(SpinnerNumberModel(5, 3, 16, 1), 1, 2, gbc)
 
         // Angle
-        addComponent(JLabel(StringResource.loadString("dialogue_options_label_rotation_angle", context.locale)), 2, 0, 1, gbc)
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_rotation_angle", context.properties.locale)), 2, 0, 1, gbc)
         angleSlider = createSlider(0, 360, 0, 1)
         addComponent(angleSlider, 2, 1, 1, gbc)
         angleSpinner = createSpinner(SpinnerNumberModel(0, 0, 360, 1), 2, 2, gbc)
 
         // Big Radius
-        addComponent(JLabel(StringResource.loadString("dialogue_options_label_outer_radius", context.locale)), 3, 0, 1, gbc)
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_outer_radius", context.properties.locale)), 3, 0, 1, gbc)
         bigRadiusSlider = createSlider(0, 100, 50, 1)
         addComponent(bigRadiusSlider, 3, 1, 1, gbc)
         bigRadiusSpinner = createSpinner(SpinnerNumberModel(50, 0, 100, 1), 3, 2, gbc)
 
         // Small Radius
-        addComponent(JLabel(StringResource.loadString("dialogue_options_label_inner_radius", context.locale)), 4, 0, 1, gbc)
+        addComponent(JLabel(StringResource.loadString("dialogue_options_label_inner_radius", context.properties.locale)), 4, 0, 1, gbc)
         smallRadiusSlider = createSlider(0, 100, 20, 1)
         addComponent(smallRadiusSlider, 4, 1, 1, gbc)
         smallRadiusSpinner = createSpinner(SpinnerNumberModel(20, 0, 100, 1), 4, 2, gbc)

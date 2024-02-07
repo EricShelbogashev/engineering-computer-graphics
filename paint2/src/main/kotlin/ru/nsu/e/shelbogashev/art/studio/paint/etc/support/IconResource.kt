@@ -1,4 +1,4 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.support
+package ru.nsu.e.shelbogashev.art.studio.paint.etc.support
 
 import java.util.*
 import javax.swing.ImageIcon

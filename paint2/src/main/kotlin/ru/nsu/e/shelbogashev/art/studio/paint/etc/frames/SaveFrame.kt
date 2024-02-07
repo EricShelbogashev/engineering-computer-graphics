@@ -1,6 +1,6 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.frames
+package ru.nsu.e.shelbogashev.art.studio.paint.etc.frames
 
-import ru.nsu.e.shelbogashev.art.studio.paint.DrawField
+import ru.nsu.e.shelbogashev.art.studio.paint.etc.DrawField
 import java.awt.FileDialog
 import java.io.File
 import java.io.IOException

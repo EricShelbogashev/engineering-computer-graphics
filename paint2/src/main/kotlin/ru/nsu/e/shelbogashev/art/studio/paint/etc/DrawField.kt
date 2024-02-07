@@ -1,10 +1,10 @@
-package ru.nsu.e.shelbogashev.art.studio.paint
+package ru.nsu.e.shelbogashev.art.studio.paint.etc
 
 import mu.KotlinLogging
-import ru.nsu.e.shelbogashev.art.studio.paint.tools.FillTool
-import ru.nsu.e.shelbogashev.art.studio.paint.tools.LineTool
-import ru.nsu.e.shelbogashev.art.studio.paint.tools.RegularTool
-import ru.nsu.e.shelbogashev.art.studio.paint.tools.StarTool
+import ru.nsu.e.shelbogashev.art.studio.paint.etc.tools.FillTool
+import ru.nsu.e.shelbogashev.art.studio.paint.etc.tools.LineTool
+import ru.nsu.e.shelbogashev.art.studio.paint.etc.tools.RegularTool
+import ru.nsu.e.shelbogashev.art.studio.paint.etc.tools.StarTool
 import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener

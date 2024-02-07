@@ -1,4 +1,4 @@
-package ru.nsu.e.shelbogashev.art.studio.paint
+package ru.nsu.e.shelbogashev.art.studio.paint.etc
 
 import java.awt.image.Raster
 

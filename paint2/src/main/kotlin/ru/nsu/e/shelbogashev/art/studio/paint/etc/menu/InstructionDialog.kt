@@ -1,4 +1,4 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.menu
+package ru.nsu.e.shelbogashev.art.studio.paint.etc.menu
 
 import javax.swing.JDialog
 import javax.swing.JFrame

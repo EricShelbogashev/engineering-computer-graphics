@@ -1,4 +1,4 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.tools
+package ru.nsu.e.shelbogashev.art.studio.paint.etc.tools
 
 import java.awt.Color
 import java.awt.Graphics2D
