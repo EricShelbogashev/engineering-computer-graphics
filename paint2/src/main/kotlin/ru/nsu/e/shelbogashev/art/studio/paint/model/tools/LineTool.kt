@@ -1,4 +1,4 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.etc.tools
+package ru.nsu.e.shelbogashev.art.studio.paint.model.tools
 
 import java.awt.BasicStroke
 import java.awt.Color

@@ -1,10 +1,10 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.etc
+package ru.nsu.e.shelbogashev.art.studio.paint.model
 
 import mu.KotlinLogging
-import ru.nsu.e.shelbogashev.art.studio.paint.etc.tools.FillTool
-import ru.nsu.e.shelbogashev.art.studio.paint.etc.tools.LineTool
-import ru.nsu.e.shelbogashev.art.studio.paint.etc.tools.RegularTool
-import ru.nsu.e.shelbogashev.art.studio.paint.etc.tools.StarTool
+import ru.nsu.e.shelbogashev.art.studio.paint.model.tools.FillTool
+import ru.nsu.e.shelbogashev.art.studio.paint.model.tools.LineTool
+import ru.nsu.e.shelbogashev.art.studio.paint.model.tools.RegularTool
+import ru.nsu.e.shelbogashev.art.studio.paint.model.tools.StarTool
 import java.awt.*
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
@@ -112,7 +112,7 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
             }
 
             PenStyle.STAR -> starTool.draw(image!!, e.point, currentColor)
-            PenStyle.POLYGON -> regularTool.draw(image!!, e.point, currentColor)
+            PenStyle.REGULAR -> regularTool.draw(image!!, e.point, currentColor)
             PenStyle.FILL -> fillTool.fill(image!!, e.point, currentColor)
             PenStyle.PEN -> {
                 prevPoint = e.point
@@ -156,7 +156,7 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
     /**
      * Отмена последнего действия.
      */
-    fun back() {
+    fun undo() {
         val lastSave = saves.lastSave
         if (lastSave != null) {
             setWhite()
@@ -201,7 +201,6 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
         this.image = newImage
         g2d = newImage.createGraphics()
         repaint()
-        println("New image has been set!")
     }
 
     /**
@@ -211,7 +210,6 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
      */
     fun setPenStyle(style: PenStyle) {
         this.curPenStyle = style
-        println("Pen changed to " + style.name)
     }
 
     /**
@@ -243,7 +241,7 @@ class DrawField : JPanel(), MouseListener, MouseMotionListener {
         PEN,
         LINE,
         STAR,
-        POLYGON,
+        REGULAR,
         ERASER,
         FILL
     }

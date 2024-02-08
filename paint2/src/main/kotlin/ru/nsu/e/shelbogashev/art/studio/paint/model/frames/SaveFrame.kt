@@ -1,6 +1,6 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.etc.frames
+package ru.nsu.e.shelbogashev.art.studio.paint.model.frames
 
-import ru.nsu.e.shelbogashev.art.studio.paint.etc.DrawField
+import ru.nsu.e.shelbogashev.art.studio.paint.model.DrawField
 import java.awt.FileDialog
 import java.io.File
 import java.io.IOException
@@ -17,8 +17,6 @@ class SaveFrame(field: DrawField) : JFrame() {
 
     /**
      * Инициализация объекта SaveFrame.
-     *
-     * @param field DrawField, из которого будет сохранено изображение.
      */
     init {
         this.isVisible = false // Делаем окно невидимым при создании

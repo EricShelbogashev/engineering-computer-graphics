@@ -1,4 +1,4 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.etc.support
+package ru.nsu.e.shelbogashev.art.studio.paint.model.support
 
 import java.util.*
 

@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package ru.nsu.e.shelbogashev.art.studio.paint.initializer
 
 import javax.swing.JComponent
@@ -10,5 +12,11 @@ object ComponentRegistry {
         components[component.name] = component
     }
 
-    fun <T : JComponent> findByName(name: String): T? = components[name] as? T
+    fun <T : JComponent> findById(name: String): T {
+        val jComponent: JComponent = components[name]
+            ?: throw NoSuchElementException("компонент с идентификатором $name не найден")
+        return jComponent as T
+    }
+
+    fun all(): Collection<JComponent> = components.values.toList()
 }

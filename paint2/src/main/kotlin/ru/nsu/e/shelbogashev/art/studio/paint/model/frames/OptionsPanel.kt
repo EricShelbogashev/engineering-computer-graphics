@@ -1,7 +1,7 @@
-package ru.nsu.e.shelbogashev.art.studio.paint.etc.frames
+package ru.nsu.e.shelbogashev.art.studio.paint.model.frames
 
 import ru.nsu.e.shelbogashev.art.studio.paint.context.ApplicationContext
-import ru.nsu.e.shelbogashev.art.studio.paint.etc.support.StringResource
+import ru.nsu.e.shelbogashev.art.studio.paint.model.support.StringResource
 import java.awt.*
 import javax.swing.*
 

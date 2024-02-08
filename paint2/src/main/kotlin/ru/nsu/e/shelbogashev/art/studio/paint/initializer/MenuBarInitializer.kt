@@ -1,7 +1,7 @@
 package ru.nsu.e.shelbogashev.art.studio.paint.initializer
 
 import PaintApplication
-import ru.nsu.e.shelbogashev.art.studio.paint.etc.support.StringResource
+import ru.nsu.e.shelbogashev.art.studio.paint.model.support.StringResource
 import java.awt.event.ActionEvent
 import javax.swing.*
 
@@ -66,7 +66,8 @@ class MenuBarInitializer {
             MenuItemConfig("menu_tools_button_star", "menu_tools_button_star", isRadioButton = true),
             MenuItemConfig("menu_tools_button_fill", "menu_tools_button_fill", isRadioButton = true),
             MenuItemConfig("menu_tools_button_eraser", "menu_tools_button_eraser", isRadioButton = true),
-            MenuItemConfig("menu_tools_button_clear", "menu_tools_button_clear")
+            MenuItemConfig("menu_tools_button_clear", "menu_tools_button_clear"),
+            MenuItemConfig("menu_tools_button_resize", "menu_tools_button_resize")
         )
         val toolsGroup = ButtonGroup()
         val viewMenu = addMenuItems(
@@ -75,12 +76,7 @@ class MenuBarInitializer {
             application,
             toolsGroup
         )
-        viewMenu.add(
-            createMenuItem(
-                MenuItemConfig("menu_tools_button_resize", "menu_tools_button_resize"),
-                application
-            )
-        )
+
         menuBar.add(viewMenu)
 
         // About menu

@@ -22,6 +22,7 @@ subprojects {
     }
 
     dependencies {
+        implementation("com.formdev:flatlaf:3.3")
         implementation("ch.qos.logback:logback-classic:1.4.14")
         implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
         testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.1")
