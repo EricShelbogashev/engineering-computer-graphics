@@ -1,30 +1,20 @@
 package ru.nsu.e.shelbogashev.art.studio.paint.model.menu
 
+import ru.nsu.e.shelbogashev.art.studio.paint.context.ApplicationContext
+import ru.nsu.e.shelbogashev.art.studio.paint.model.support.StringResource
 import javax.swing.JDialog
 import javax.swing.JFrame
 import javax.swing.JScrollPane
 import javax.swing.JTextPane
 
-class InstructionDialog(parentFrame: JFrame?) : JDialog(parentFrame, "Инструкция по использованию программы", true) {
+class InstructionDialog(parentFrame: JFrame?, context: ApplicationContext) :
+    JDialog(parentFrame, StringResource.loadString("dialogue_instruction_title", context.properties.locale), true) {
     init {
         val textPane = JTextPane()
         textPane.contentType = "text/html"
         textPane.isEditable = false
 
-        val instructionsHtml = "<html><body>" +
-                "<ul>" +
-                "<li>Используйте кнопку с изображением шестерёнок для доступа к настройкам программы. Здесь вы можете задать размер инструмента для рисования, количество вершин фигур, угол поворота фигур и их радиус.</li>" +
-                "<li>Кнопка с изображением метлы полностью очистит рабочую область.</li>" +
-                "<li>С помощью кнопки, изображающей ручку, можно рисовать вручную. Размер пера регулируется в настройках.</li>" +
-                "<li>Кнопка с линией позволяет рисовать прямые линии. Нарисовать линию можно, сделав два клика: первый задаёт начальную точку, второй — конечную. Ширину линии можно изменить в настройках. При ширине в один пиксель линия создаётся с использованием алгоритма Брезенхема.</li>" +
-                "<li>Используйте кнопку с многоугольником для рисования фигур с заданным числом вершин, радиусом и углом поворота, которые можно настроить в параметрах.</li>" +
-                "<li>Кнопка со звездой рисует звезду с заданным в параметрах числом вершин и углом поворота.</li>" +
-                "<li>Кнопка с изображением ведра заливает выбранную область текущим цветом.</li>" +
-                "<li>Кнопки различных цветов позволяют изменять цвет рисования.</li>" +
-                "<li>Кнопка с палитрой предоставляет возможность выбрать любой цвет для рисования.</li>" +
-                "<li>Кнопка со стрелкой возвращает на шаг назад, отменяя последнее действие.</li>" +
-                "</ul>" +
-                "</body></html>"
+        val instructionsHtml = StringResource.loadString("dialogue_instruction_content", context.properties.locale)
 
         textPane.text = instructionsHtml
         val scrollPane = JScrollPane(textPane)

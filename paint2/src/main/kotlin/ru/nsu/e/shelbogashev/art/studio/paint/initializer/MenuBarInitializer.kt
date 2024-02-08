@@ -11,7 +11,8 @@ class MenuBarInitializer {
         val id: String,
         val key: String,
         val action: ((ActionEvent) -> Unit)? = null,
-        val isRadioButton: Boolean = false
+        val isRadioButton: Boolean = false,
+        val selected: Boolean = false
     )
 
     private fun createMenuItem(config: MenuItemConfig, application: PaintApplication): JMenuItem {
@@ -24,6 +25,7 @@ class MenuBarInitializer {
         return result.apply {
             config.action?.let { addActionListener(it) }
             this.name = config.id
+            isSelected = config.selected
         }
     }
 
@@ -60,7 +62,7 @@ class MenuBarInitializer {
 
         // View menu
         val viewMenuItems = listOf(
-            MenuItemConfig("menu_tools_button_pen", "menu_tools_button_pen", isRadioButton = true),
+            MenuItemConfig("menu_tools_button_pen", "menu_tools_button_pen", isRadioButton = true, selected = true),
             MenuItemConfig("menu_tools_button_line", "menu_tools_button_line", isRadioButton = true),
             MenuItemConfig("menu_tools_button_regular", "menu_tools_button_regular", isRadioButton = true),
             MenuItemConfig("menu_tools_button_star", "menu_tools_button_star", isRadioButton = true),

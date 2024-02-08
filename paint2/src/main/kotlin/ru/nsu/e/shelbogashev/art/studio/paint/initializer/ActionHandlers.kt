@@ -27,7 +27,7 @@ class ActionHandlers {
 
         val saveItem = ComponentRegistry.findById<JMenuItem>("menu_file_button_save_file")
         val saveFrame = SaveFrame(context.components.field)
-        saveItem.addActionListener { e: ActionEvent? ->
+        saveItem.addActionListener {
             try {
                 saveFrame.saveImage()
             } catch (ex: IOException) {
@@ -36,17 +36,14 @@ class ActionHandlers {
         }
 
         val loadItem = ComponentRegistry.findById<JMenuItem>("menu_file_button_open_file")
-        val loadFrame = LoadFrame(context.components.field)
-        loadItem.addActionListener { e: ActionEvent? ->
+        val loadFrame = LoadFrame(context.components.field, context)
+        loadItem.addActionListener {
             try {
                 loadFrame.loadImage()
             } catch (ex: IOException) {
                 throw RuntimeException(ex)
             }
         }
-
-        /*---------------------*/
-
 
         fun updateSelected(tool: Component) {
             toolbarItems.forEach {
@@ -128,18 +125,6 @@ class ActionHandlers {
             }
         }
 
-        val redColor = ComponentRegistry.findById<JButton>("toolbar_button_red")
-        redColor.addActionListener { context.components.field.setColor(Color.RED) }
-
-        val greenColor = ComponentRegistry.findById<JButton>("toolbar_button_green")
-        greenColor.addActionListener { context.components.field.setColor(Color.GREEN) }
-
-        val blueColor = ComponentRegistry.findById<JButton>("toolbar_button_blue")
-        blueColor.addActionListener { context.components.field.setColor(Color.BLUE) }
-
-        val blackColor = ComponentRegistry.findById<JButton>("toolbar_button_black")
-        blackColor.addActionListener { context.components.field.setColor(Color.BLACK) }
-
         val palletButton = ComponentRegistry.findById<JButton>("toolbar_button_palette")
         palletButton.addActionListener {
             val colorNew = JColorChooser.showDialog(
@@ -151,6 +136,30 @@ class ActionHandlers {
                 context.components.field.setColor(it)
                 palletButton.background = it
             }
+        }
+
+        val redColor = ComponentRegistry.findById<JButton>("toolbar_button_red")
+        redColor.addActionListener {
+            context.components.field.setColor(Color.RED)
+            palletButton.background = Color.RED
+        }
+
+        val greenColor = ComponentRegistry.findById<JButton>("toolbar_button_green")
+        greenColor.addActionListener {
+            context.components.field.setColor(Color.GREEN)
+            palletButton.background = Color.GREEN
+        }
+
+        val blueColor = ComponentRegistry.findById<JButton>("toolbar_button_blue")
+        blueColor.addActionListener {
+            context.components.field.setColor(Color.BLUE)
+            palletButton.background = Color.BLUE
+        }
+
+        val blackColor = ComponentRegistry.findById<JButton>("toolbar_button_black")
+        blackColor.addActionListener {
+            context.components.field.setColor(Color.BLACK)
+            palletButton.background = Color.BLACK
         }
 
         val undoButton = ComponentRegistry.findById<JButton>("toolbar_button_undo")
@@ -204,10 +213,9 @@ class ActionHandlers {
             }
         }
 
-
         val aboutItem = ComponentRegistry.findById<JMenuItem>("menu_about_button_about")
         aboutItem.addActionListener {
-            val instructionDialog = InstructionDialog(application)
+            val instructionDialog = InstructionDialog(application, context)
             instructionDialog.isVisible = true
         }
     }

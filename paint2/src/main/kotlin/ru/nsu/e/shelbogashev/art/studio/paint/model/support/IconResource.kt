@@ -20,7 +20,7 @@ enum class IconResource(private val path: String) {
     FILL("icon/fill.png"),
     PALETTE("icon/palette.png"),
     REGULAR("icon/regular.png"),
-    BACK("icon/arrow_back.png");
+    UNDO("icon/undo.png");
 
     /**
      * Загружает ImageIcon, связанный с ресурсом значка.
