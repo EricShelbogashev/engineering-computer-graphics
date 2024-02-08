@@ -11,6 +11,7 @@ import ru.nsu.e.shelbogashev.art.studio.paint.model.support.StringResource
 import java.awt.BorderLayout
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
+import java.util.*
 import javax.swing.JFrame
 import javax.swing.JOptionPane
 import javax.swing.JScrollPane
@@ -70,7 +71,7 @@ class PaintApplication(private val properties: ApplicationProperties) : JFrame(p
         fun main(args: Array<String>) {
             FlatMacLightLaf.setup()
             // Можно добавить сохраняемость настроек.
-            val appProperties = ApplicationProperties()
+            val appProperties = ApplicationProperties(locale = Locale.of("ru"))
             SwingUtilities.invokeLater { PaintApplication(appProperties) }
         }
     }

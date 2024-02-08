@@ -218,5 +218,15 @@ class ActionHandlers {
             val instructionDialog = InstructionDialog(application, context)
             instructionDialog.isVisible = true
         }
+
+        val authorItem = ComponentRegistry.findById<JMenuItem>("menu_about_button_author")
+        authorItem.addActionListener {
+            JOptionPane.showMessageDialog(
+                context.components.field,
+                StringResource.loadString("dialogue_author_content", context.properties.locale),
+                StringResource.loadString("dialogue_author_title", context.properties.locale),
+                JOptionPane.INFORMATION_MESSAGE
+            )
+        }
     }
 }

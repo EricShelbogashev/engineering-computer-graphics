@@ -83,7 +83,8 @@ class MenuBarInitializer {
 
         // About menu
         val aboutMenuItems = listOf(
-            MenuItemConfig("menu_about_button_about", "menu_about_button_about")
+            MenuItemConfig("menu_about_button_about", "menu_about_button_about"),
+            MenuItemConfig("menu_about_button_author", "menu_about_button_author")
         )
         val aboutMenu = addMenuItems(
             JMenu(StringResource.loadString("menu_about_label", application.locale)),
