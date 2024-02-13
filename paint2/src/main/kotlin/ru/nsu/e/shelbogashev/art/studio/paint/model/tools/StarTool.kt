@@ -27,7 +27,6 @@ class StarTool(
     fun draw(image: BufferedImage, center: Point, color: Color?) {
         val g2d = image.graphics as Graphics2D
 
-        // Массивы для хранения координат точек звезды
         val xCoords = IntArray(angleCount * 2)
         val yCoords = IntArray(angleCount * 2)
 

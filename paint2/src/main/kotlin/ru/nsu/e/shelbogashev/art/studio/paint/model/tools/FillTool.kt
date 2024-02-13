@@ -10,7 +10,7 @@ class FillTool {
     private val spanStack = Stack<Span>()
     private var image: BufferedImage? = null
     private var g2d: Graphics2D? = null
-    private var colorToSet = 0
+    private var newColor = 0
     private var oldColor = 0
 
     private var maxUpX = 0
@@ -61,7 +61,7 @@ class FillTool {
     // Запуск заливки
     private fun startFilling() {
         val curSpan = spanStack.pop()
-        g2d!!.color = Color(colorToSet)
+        g2d!!.color = Color(newColor)
         g2d!!.drawLine(curSpan.spanStart.x, curSpan.spanStart.y, curSpan.spanEnd.x, curSpan.spanEnd.y)
 
         for (x in curSpan.spanStart.x until curSpan.spanEnd.x) {
@@ -76,10 +76,10 @@ class FillTool {
     fun fill(image: BufferedImage, seed: Point, newColor: Color) {
         this.image = image
         this.g2d = image.graphics as Graphics2D
-        this.colorToSet = newColor.rgb
+        this.newColor = newColor.rgb
         this.oldColor = image.getRGB(seed.x, seed.y)
 
-        if (oldColor != colorToSet) {
+        if (oldColor != this.newColor) {
             addNewSpan(seed)
             while (!spanStack.isEmpty()) {
                 startFilling()

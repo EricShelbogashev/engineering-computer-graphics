@@ -63,7 +63,8 @@ class LineTool {
                             }
                             image.setRGB(x, y, curentColor.rgb)
                         }
-                    }
+                    }// добавить ограничение уменьшения hint
+                    // разобрать с большими фото
 
                     (xEnd - xStart) >= 0 && (yEnd - yStart) <= 0 -> {
                         var x = min(xStart.toDouble(), xEnd.toDouble()).toInt()

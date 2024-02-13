@@ -71,7 +71,7 @@ class PaintApplication(private val properties: ApplicationProperties) : JFrame(p
         fun main(args: Array<String>) {
             FlatMacLightLaf.setup()
             // Можно добавить сохраняемость настроек.
-            val appProperties = ApplicationProperties(locale = Locale.of("ru"))
+            val appProperties = ApplicationProperties(locale = Locale.of("en"))
             SwingUtilities.invokeLater { PaintApplication(appProperties) }
         }
     }

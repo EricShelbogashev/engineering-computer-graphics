@@ -5,3 +5,5 @@ rootProject.name = "engineering-computer-graphics"
 include("studio-core")
 include("paint")
 include("paint2")
+include("raytracing-pure")
+include("wireframe")
