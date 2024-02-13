@@ -1,76 +1,24 @@
-package ru.nsu.e.shelbogashev.wireframe.utils;
+package ru.nsu.e.shelbogashev.wireframe.utils
+
+import kotlin.math.sqrt
 
 /**
  * Представляет четырехмерный вектор с координатами (x, y, z, w).
  */
-public class Vector4 {
-    private final double w;
-    private double x;
-    private double y;
-    private double z;
-
-    /**
-     * Создает новый четырехмерный вектор с заданными координатами и w = 1.
-     *
-     * @param x Координата x.
-     * @param y Координата y.
-     * @param z Координата z.
-     */
-    public Vector4(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = 1; // Убедимся, что w изначально установлен в 1
-    }
-
-    /**
-     * Возвращает координату x вектора.
-     *
-     * @return Координата x.
-     */
-    public double getX() {
-        return x;
-    }
-
-    /**
-     * Возвращает координату y вектора.
-     *
-     * @return Координата y.
-     */
-    public double getY() {
-        return y;
-    }
-
-    /**
-     * Возвращает координату z вектора.
-     *
-     * @return Координата z.
-     */
-    public double getZ() {
-        return z;
-    }
-
-    /**
-     * Возвращает координату w вектора.
-     *
-     * @return Координата w.
-     */
-    public double getW() {
-        return w;
-    }
+class Vector4(var x: Double, var y: Double, var z: Double) {
+    val w: Double = 1.0
 
     /**
      * Нормализует вектор, делая его длину равной 1.
      */
-    public void normalize() {
-        double norm = Math.sqrt(x * x + y * y + z * z);
-        x /= norm;
-        y /= norm;
-        z /= norm;
+    fun normalize() {
+        val norm = sqrt(x * x + y * y + z * z)
+        x /= norm
+        y /= norm
+        z /= norm
     }
 
-    @Override
-    public String toString() {
-        return x + " " + y + " " + z + " " + w;
+    override fun toString(): String {
+        return "$x $y $z $w"
     }
 }

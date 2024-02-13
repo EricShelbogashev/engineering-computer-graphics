@@ -1,55 +1,57 @@
-package ru.nsu.e.shelbogashev.wireframe.bsplineeditor;
+package ru.nsu.e.shelbogashev.wireframe.bsplineeditor
 
-import ru.nsu.e.shelbogashev.wireframe.utils.Settings;
-import ru.nsu.e.shelbogashev.wireframe.wireframe.WireframeFrame;
-
-import javax.swing.*;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
+import ru.nsu.e.shelbogashev.wireframe.utils.Settings
+import ru.nsu.e.shelbogashev.wireframe.wireframe.WireframeFrame
+import java.awt.BorderLayout
+import java.awt.Dimension
+import java.awt.FlowLayout
+import java.awt.event.ActionEvent
+import javax.swing.*
+import javax.swing.event.ChangeEvent
+import javax.swing.event.ChangeListener
 
 /**
  * Панель опций предоставляет пользователю интерфейс для настройки параметров приложения.
  */
-public class OptionsPanel extends JPanel {
-    private final WireframeFrame wireframeFrame;
-
+class OptionsPanel(splinePanel: SplinePanel, private val wireframeFrame: WireframeFrame) : JPanel() {
     /**
      * Создает панель опций с заданными компонентами.
-     *
-     * @param splinePanel    Панель для редактирования B-сплайнов.
-     * @param wireframeFrame Окно для отображения проволочной модели.
      */
-    public OptionsPanel(SplinePanel splinePanel, WireframeFrame wireframeFrame) {
-        this.wireframeFrame = wireframeFrame;
-        setupPanel();
-        addApplyButton();
-        addSpinnerWithLabel("Генератрисы", Settings.getGeneratrixNum(), 2, 10, 1, e ->
-                Settings.setGeneratrixNum((int) ((JSpinner) e.getSource()).getValue()));
-        addSpinnerWithLabel("Круги", Settings.getCirclesNum(), 2, 10, 1, e ->
-                Settings.setCirclesNum((int) ((JSpinner) e.getSource()).getValue()));
-        addSpinnerWithLabel("Точность", Settings.getCirclesAccuracy(), 1, 10, 1, e ->
-                Settings.setCirclesAccuracy((int) ((JSpinner) e.getSource()).getValue()));
-        addSpinnerWithLabel("Сегменты", Settings.SEGMENTS_NUM, 1, 20, 1, e -> {
-            Settings.SEGMENTS_NUM = (int) ((JSpinner) e.getSource()).getValue();
-            splinePanel.recreateSpline();
-        });
+    init {
+        setupPanel()
+        addApplyButton()
+        addSpinnerWithLabel("Генератрисы", Settings.generatrixNum, 2, 10, 1) { e: ChangeEvent ->
+            Settings.generatrixNum = (e.source as JSpinner).value as Int
+        }
+        addSpinnerWithLabel("Круги", Settings.circlesNum, 2, 10, 1) { e: ChangeEvent ->
+            Settings.circlesNum = (e.source as JSpinner).value as Int
+
+        }
+        addSpinnerWithLabel("Точность", Settings.circlesAccuracy, 1, 10, 1) { e: ChangeEvent ->
+            Settings.circlesAccuracy = (e.source as JSpinner).value as Int
+
+        }
+        addSpinnerWithLabel("Сегменты", Settings.SEGMENTS_NUM, 1, 20, 1) { e: ChangeEvent ->
+            Settings.SEGMENTS_NUM = (e.source as JSpinner).value as Int
+            splinePanel.recreateSpline()
+        }
     }
 
     /**
      * Настройка внешнего вида панели опций.
      */
-    private void setupPanel() {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        setPreferredSize(new Dimension(640, 200));
+    private fun setupPanel() {
+        layout = FlowLayout(FlowLayout.LEFT)
+        preferredSize = Dimension(640, 200)
     }
 
     /**
      * Добавляет кнопку применения изменений.
      */
-    private void addApplyButton() {
-        JButton applyButton = new JButton("Применить");
-        applyButton.addActionListener(e -> wireframeFrame.createWireframe());
-        add(applyButton, BorderLayout.SOUTH);
+    private fun addApplyButton() {
+        val applyButton = JButton("Применить")
+        applyButton.addActionListener { _: ActionEvent? -> wireframeFrame.createWireframe() }
+        add(applyButton, BorderLayout.SOUTH)
     }
 
     /**
@@ -62,14 +64,16 @@ public class OptionsPanel extends JPanel {
      * @param step           Шаг изменения значения спиннера.
      * @param changeListener Обработчик изменения значения спиннера.
      */
-    private void addSpinnerWithLabel(String labelText, int initialValue, int min, int max, int step,
-                                     ChangeListener changeListener) {
-        JLabel label = new JLabel(labelText);
-        add(label);
+    private fun addSpinnerWithLabel(
+        labelText: String, initialValue: Int, min: Int, max: Int, step: Int,
+        changeListener: ChangeListener
+    ) {
+        val label = JLabel(labelText)
+        add(label)
 
-        SpinnerNumberModel spinnerModel = new SpinnerNumberModel(initialValue, min, max, step);
-        JSpinner spinner = new JSpinner(spinnerModel);
-        spinner.addChangeListener(changeListener);
-        add(spinner);
+        val spinnerModel = SpinnerNumberModel(initialValue, min, max, step)
+        val spinner = JSpinner(spinnerModel)
+        spinner.addChangeListener(changeListener)
+        add(spinner)
     }
 }

@@ -1,81 +1,36 @@
-package ru.nsu.e.shelbogashev.wireframe.utils;
+package ru.nsu.e.shelbogashev.wireframe.utils
 
 /**
  * Предоставляет набор констант и методов для управления настройками приложения.
  */
-public class Settings {
+object Settings {
     /**
-     * Эта константа представляет длину одного сегмента
-     * координатной плоскости в пикселях.
+     * Длина одного сегмента координатной плоскости в пикселях.
      */
-    public static final int DEFAULT_INDENT = 30;
+    const val DEFAULT_INDENT: Int = 30
 
     /**
-     * Эта константа представляет радиус круга точки-якоря в пикселях.
+     * Радиус круга точки-якоря в пикселях.
      */
-    public static final int RADIUS = 10;
+    const val RADIUS: Int = 10
+
     /**
      * Количество сегментов, на которые будет разделен сегмент [0, 1].
      */
-    public static int SEGMENTS_NUM = 10;
-    /**
-     * Это количество продольных генератрис.
-     */
-    private static int generatrixNum = 5;
-    private static int circlesNum = 4;
-    private static int circlesAccuracy = 3;
+    var SEGMENTS_NUM: Int = 10
 
     /**
-     * Возвращает количество продольных генератрис.
-     *
-     * @return Количество продольных генератрис.
+     * Количество продольных генератрис.
      */
-    public static int getGeneratrixNum() {
-        return generatrixNum;
-    }
+    var generatrixNum: Int = 5
 
     /**
-     * Устанавливает новое значение количества продольных генератрис.
-     *
-     * @param generatrixNum Новое значение количества продольных генератрис.
+     * Количество круговых генератрис.
      */
-    public static void setGeneratrixNum(int generatrixNum) {
-        Settings.generatrixNum = generatrixNum;
-    }
+    var circlesNum: Int = 4
 
     /**
-     * Возвращает количество круговых генератрис.
-     *
-     * @return Количество круговых генератрис.
+     * Точность круговых генератрис.
      */
-    public static int getCirclesNum() {
-        return circlesNum;
-    }
-
-    /**
-     * Устанавливает новое значение количества круговых генератрис.
-     *
-     * @param circlesNum Новое значение количества круговых генератрис.
-     */
-    public static void setCirclesNum(int circlesNum) {
-        Settings.circlesNum = circlesNum;
-    }
-
-    /**
-     * Возвращает точность круговых генератрис.
-     *
-     * @return Точность круговых генератрис.
-     */
-    public static int getCirclesAccuracy() {
-        return circlesAccuracy;
-    }
-
-    /**
-     * Устанавливает новое значение точности круговых генератрис.
-     *
-     * @param circlesAccuracy Новое значение точности круговых генератрис.
-     */
-    public static void setCirclesAccuracy(int circlesAccuracy) {
-        Settings.circlesAccuracy = circlesAccuracy;
-    }
+    var circlesAccuracy: Int = 3
 }

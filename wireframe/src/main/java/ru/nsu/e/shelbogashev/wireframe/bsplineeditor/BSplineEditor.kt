@@ -1,80 +1,81 @@
-package ru.nsu.e.shelbogashev.wireframe.bsplineeditor;
+package ru.nsu.e.shelbogashev.wireframe.bsplineeditor
 
-import ru.nsu.e.shelbogashev.wireframe.wireframe.WireframeFrame;
-
-import javax.swing.*;
-import java.awt.*;
+import ru.nsu.e.shelbogashev.wireframe.wireframe.WireframeFrame
+import java.awt.BorderLayout
+import java.awt.Dimension
+import java.awt.event.ActionEvent
+import javax.swing.*
 
 /**
  * Класс BSplineEditor представляет графический интерфейс для редактирования B-сплайнов.
  */
-public class BSplineEditor extends JFrame {
-
+class BSplineEditor : JFrame() {
     /**
      * Создает экземпляр класса BSplineEditor.
      */
-    public BSplineEditor() {
-        initializeFrame();
-        setupComponents();
-        setupMenu();
-        setVisible(true);
+    init {
+        initializeFrame()
+        setupComponents()
+        setupMenu()
+        isVisible = true
     }
 
     /**
      * Инициализирует основные параметры окна.
      */
-    private void initializeFrame() {
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        setMinimumSize(new Dimension(900, 700));
-        setBounds(380, 100, 900, 600);
+    private fun initializeFrame() {
+        defaultCloseOperation = DO_NOTHING_ON_CLOSE
+        minimumSize = Dimension(900, 700)
+        setBounds(380, 100, 900, 600)
     }
 
     /**
      * Настроивает компоненты интерфейса.
      */
-    private void setupComponents() {
-        BSpline bSpline = new BSpline();
-        SplinePanel editorPanel = new SplinePanel(bSpline);
-        add(editorPanel, BorderLayout.CENTER);
+    private fun setupComponents() {
+        val bSpline = BSpline()
+        val editorPanel = SplinePanel(bSpline)
+        add(editorPanel, BorderLayout.CENTER)
 
-        WireframeFrame wireframeFrame = new WireframeFrame(bSpline);
-        OptionsPanel optionsPanel = new OptionsPanel(editorPanel, wireframeFrame);
-        add(optionsPanel, BorderLayout.SOUTH);
+        val wireframeFrame = WireframeFrame(bSpline)
+        val optionsPanel = OptionsPanel(editorPanel, wireframeFrame)
+        add(optionsPanel, BorderLayout.SOUTH)
     }
 
     /**
      * Настроивает меню приложения.
      */
-    private void setupMenu() {
-        JMenuBar menu = new JMenuBar();
-        add(menu, BorderLayout.NORTH);
+    private fun setupMenu() {
+        val menu = JMenuBar()
+        add(menu, BorderLayout.NORTH)
 
-        JMenu file = new JMenu("Файл");
-        menu.add(file);
+        val file = JMenu("Файл")
+        menu.add(file)
 
-        JMenu about = new JMenu("О программе");
-        menu.add(about);
+        val about = JMenu("О программе")
+        menu.add(about)
 
-        JMenuItem save = new JMenuItem("Сохранить");
-        JMenuItem load = new JMenuItem("Загрузить");
-        file.add(save);
-        file.add(load);
+        val save = JMenuItem("Сохранить")
+        val load = JMenuItem("Загрузить")
+        file.add(save)
+        file.add(load)
 
-        JMenuItem aboutItem = new JMenuItem("О программе");
-        about.add(aboutItem);
+        val aboutItem = JMenuItem("О программе")
+        about.add(aboutItem)
 
-        aboutItem.addActionListener(e -> showAboutDialog());
+        aboutItem.addActionListener { _: ActionEvent? -> showAboutDialog() }
     }
 
     /**
      * Отображает диалоговое окно с информацией о программе и авторе.
      */
-    private void showAboutDialog() {
+    private fun showAboutDialog() {
         JOptionPane.showConfirmDialog(
-                null,
-                "Автор: Шелбогашев Эрик 21209, ФИТ НГУ",
-                "О программе",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.PLAIN_MESSAGE);
+            null,
+            "Автор: Шелбогашев Эрик 21209, ФИТ НГУ",
+            "О программе",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+        )
     }
 }
