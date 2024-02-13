@@ -55,7 +55,7 @@ class BSpline {
         splinePoints = ArrayList() // каждый раз создаем новый массив точек
         val anchorPointsNum = anchorPoints.size
 
-        val step = 1.0 / Settings.SEGMENTS_NUM // шаг между каждой частью сегмента [0, 1]
+        val step = 1.0 / Settings.segmentsNum // шаг между каждой частью сегмента [0, 1]
         var x: Double
         var y: Double
 
@@ -80,7 +80,7 @@ class BSpline {
             val yVector = splineMatrix.multiplyMatrixVector(yCoords)
 
             var t: Double
-            for (k in 0..Settings.SEGMENTS_NUM) {
+            for (k in 0..Settings.segmentsNum) {
                 t = k * step
                 x = t * t * t * xVector[0] + t * t * xVector[1] + t * xVector[2] + xVector[3]
                 y = t * t * t * yVector[0] + t * t * yVector[1] + t * yVector[2] + yVector[3]

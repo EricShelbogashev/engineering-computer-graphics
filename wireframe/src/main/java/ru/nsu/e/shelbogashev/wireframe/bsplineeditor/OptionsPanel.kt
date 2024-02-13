@@ -20,19 +20,19 @@ class OptionsPanel(splinePanel: SplinePanel, private val wireframeFrame: Wirefra
     init {
         setupPanel()
         addApplyButton()
-        addSpinnerWithLabel("Генератрисы", Settings.generatrixNum, 2, 10, 1) { e: ChangeEvent ->
+        addSpinnerWithLabel("Генератрисы", Settings.generatrixNum, 2, 1000, 1) { e: ChangeEvent ->
             Settings.generatrixNum = (e.source as JSpinner).value as Int
         }
-        addSpinnerWithLabel("Круги", Settings.circlesNum, 2, 10, 1) { e: ChangeEvent ->
+        addSpinnerWithLabel("Круги", Settings.circlesNum, 2, 1000, 1) { e: ChangeEvent ->
             Settings.circlesNum = (e.source as JSpinner).value as Int
 
         }
-        addSpinnerWithLabel("Точность", Settings.circlesAccuracy, 1, 10, 1) { e: ChangeEvent ->
+        addSpinnerWithLabel("Точность", Settings.circlesAccuracy, 1, 1000, 1) { e: ChangeEvent ->
             Settings.circlesAccuracy = (e.source as JSpinner).value as Int
 
         }
-        addSpinnerWithLabel("Сегменты", Settings.SEGMENTS_NUM, 1, 20, 1) { e: ChangeEvent ->
-            Settings.SEGMENTS_NUM = (e.source as JSpinner).value as Int
+        addSpinnerWithLabel("Сегменты", Settings.segmentsNum, 1, 1000, 1) { e: ChangeEvent ->
+            Settings.segmentsNum = (e.source as JSpinner).value as Int
             splinePanel.recreateSpline()
         }
     }

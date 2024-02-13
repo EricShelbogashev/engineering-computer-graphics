@@ -17,12 +17,12 @@ object Settings {
     /**
      * Количество сегментов, на которые будет разделен сегмент [0, 1].
      */
-    const val SEGMENTS_NUM: Int = 10
+    var segmentsNum: Int = 500
 
     /**
      * Количество продольных генератрис.
      */
-    var generatrixNum: Int = 5
+    var generatrixNum: Int = 500
 
     /**
      * Количество круговых генератрис.
