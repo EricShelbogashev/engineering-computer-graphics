@@ -15,8 +15,6 @@ class WireframePanel(private val bSpline: BSpline) : JPanel(), MouseListener, Mo
 
     /**
      * Создает новую панель для отображения проволочной модели на основе заданной кривой Безье.
-     *
-     * @param spline Кривая Безье, на основе которой будет создана проволочная модель.
      */
     init {
         background = Color.WHITE

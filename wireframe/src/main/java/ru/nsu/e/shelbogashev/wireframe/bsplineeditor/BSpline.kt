@@ -23,11 +23,6 @@ class BSpline {
     private val anchorPoints: MutableList<Point2D> = ArrayList()
 
     /**
-     * Возвращает список точек, аппроксимирующих B-сплайн.
-     *
-     * @return Список точек B-сплайна.
-     */
-    /**
      * Точки, которые будут аппроксимировать часть B-сплайна.
      */
     var splinePoints: ArrayList<Point2D>? = null
