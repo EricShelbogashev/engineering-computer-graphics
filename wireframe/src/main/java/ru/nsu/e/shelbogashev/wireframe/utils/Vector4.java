@@ -15,9 +15,8 @@ public class Vector4 {
      * @param x Координата x.
      * @param y Координата y.
      * @param z Координата z.
-     * @param w Координата w.
      */
-    public Vector4(double x, double y, double z, double w) {
+    public Vector4(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;

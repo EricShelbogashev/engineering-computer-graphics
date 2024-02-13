@@ -11,7 +11,6 @@ import java.awt.*;
  * Панель опций предоставляет пользователю интерфейс для настройки параметров приложения.
  */
 public class OptionsPanel extends JPanel {
-    private final SplinePanel splinePanel;
     private final WireframeFrame wireframeFrame;
 
     /**
@@ -21,7 +20,6 @@ public class OptionsPanel extends JPanel {
      * @param wireframeFrame Окно для отображения проволочной модели.
      */
     public OptionsPanel(SplinePanel splinePanel, WireframeFrame wireframeFrame) {
-        this.splinePanel = splinePanel;
         this.wireframeFrame = wireframeFrame;
         setupPanel();
         addApplyButton();

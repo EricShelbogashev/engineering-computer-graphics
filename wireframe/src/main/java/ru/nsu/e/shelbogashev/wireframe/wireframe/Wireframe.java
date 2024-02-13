@@ -1,5 +1,6 @@
 package ru.nsu.e.shelbogashev.wireframe.wireframe;
 
+import org.jetbrains.annotations.NotNull;
 import ru.nsu.e.shelbogashev.wireframe.utils.Matrix;
 import ru.nsu.e.shelbogashev.wireframe.utils.Point2D;
 import ru.nsu.e.shelbogashev.wireframe.utils.Settings;
@@ -44,22 +45,27 @@ public class Wireframe {
      * @param p2 Вторая точка, задающая ось вращения.
      */
     public void setRotationMatrix(java.awt.Point p1, java.awt.Point p2) {
-        Vector4 axis = new Vector4(-(p2.y - p1.y), -(p2.x - p1.x), 0, 1.0);
+        Vector4 axis = new Vector4(-(p2.y - p1.y), -(p2.x - p1.x), 0);
         if (axis.getX() == 0 && axis.getY() == 0)
             return;
         axis.normalize();
         double rotationAngle = 5.0;
         double cos = Math.cos(Math.toRadians(rotationAngle));
+        Matrix rotation = getMatrix(rotationAngle, axis, cos);
+        this.translateMatrix = rotation.multiplyMatrixMatrix(translateMatrix);
+        rotationMatrix = rotation.multiplyMatrixMatrix(rotationMatrix);
+    }
+
+    @NotNull
+    private static Matrix getMatrix(double rotationAngle, Vector4 axis, double cos) {
         double sin = Math.sin(Math.toRadians(rotationAngle));
         double x = axis.getX(), y = axis.getY(), z = axis.getZ();
-        Matrix rotation = new Matrix(new double[][]{
+        return new Matrix(new double[][]{
                 {cos + (1 - cos) * x * x, (1 - cos) * x * y - sin * z, (1 - cos) * x * z + sin * y, 0},
                 {(1 - cos) * y * x + sin * z, cos + (1 - cos) * y * y, (1 - cos) * y * z - sin * x, 0},
                 {(1 - cos) * z * x - sin * y, (1 - cos) * z * y + sin * x, cos + (1 - cos) * z * z, 0},
                 {0, 0, 0, 1.0}
         });
-        this.translateMatrix = rotation.multiplyMatrixMatrix(translateMatrix);
-        rotationMatrix = rotation.multiplyMatrixMatrix(rotationMatrix);
     }
 
     /**
@@ -100,9 +106,9 @@ public class Wireframe {
     }
 
     private void setNormalizeMatrix() {
-        double maxX = wireframePoints.get(0).getX(), minX = wireframePoints.get(0).getX();
-        double maxY = wireframePoints.get(0).getY(), minY = wireframePoints.get(0).getY();
-        double maxZ = wireframePoints.get(0).getZ(), minZ = wireframePoints.get(0).getZ();
+        double maxX = wireframePoints.getFirst().getX(), minX = wireframePoints.getFirst().getX();
+        double maxY = wireframePoints.getFirst().getY(), minY = wireframePoints.getFirst().getY();
+        double maxZ = wireframePoints.getFirst().getZ(), minZ = wireframePoints.getFirst().getZ();
         for (Vector4 v : wireframePoints) {
             if (v.getX() > maxX)
                 maxX = v.getX();
@@ -146,7 +152,7 @@ public class Wireframe {
             cos = Math.cos(Math.toRadians(curAngle));
             sin = Math.sin(Math.toRadians(curAngle));
             for (Point2D p : bSplinePoints) {
-                Vector4 newPoint = new Vector4(p.getY() * cos, p.getY() * sin, p.getX(), 1.0);
+                Vector4 newPoint = new Vector4(p.getY() * cos, p.getY() * sin, p.getX());
                 Vector4 planePoint = translateMatrix.multiplyMatrixVector(newPoint);
                 planePoint = cameraTranslateMatrix.multiplyMatrixVector(planePoint);
                 wireframePoints.add(planePoint);
@@ -187,14 +193,14 @@ public class Wireframe {
      */
     public Map<Integer, List<Point2D>> getCube() {
         List<Vector4> cubePoints = new ArrayList<>();
-        cubePoints.add(new Vector4(1.0, 1.0, 1.0, 1.0));
-        cubePoints.add(new Vector4(1.0, 1.0, -1.0, 1.0));
-        cubePoints.add(new Vector4(1.0, -1.0, 1.0, 1.0));
-        cubePoints.add(new Vector4(1.0, -1.0, -1.0, 1.0));
-        cubePoints.add(new Vector4(-1.0, 1.0, 1.0, 1.0));
-        cubePoints.add(new Vector4(-1.0, 1.0, -1.0, 1.0));
-        cubePoints.add(new Vector4(-1.0, -1.0, 1.0, 1.0));
-        cubePoints.add(new Vector4(-1.0, -1.0, -1.0, 1.0));
+        cubePoints.add(new Vector4(1.0, 1.0, 1.0));
+        cubePoints.add(new Vector4(1.0, 1.0, -1.0));
+        cubePoints.add(new Vector4(1.0, -1.0, 1.0));
+        cubePoints.add(new Vector4(1.0, -1.0, -1.0));
+        cubePoints.add(new Vector4(-1.0, 1.0, 1.0));
+        cubePoints.add(new Vector4(-1.0, 1.0, -1.0));
+        cubePoints.add(new Vector4(-1.0, -1.0, 1.0));
+        cubePoints.add(new Vector4(-1.0, -1.0, -1.0));
         List<Point2D> wireframePoints = new ArrayList<>();
         for (Vector4 v : cubePoints) {
             Vector4 planePoint;

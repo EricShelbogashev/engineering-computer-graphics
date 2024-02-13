@@ -38,7 +38,7 @@ public class Matrix {
             }
         }
 
-        return new Vector4(result[0] / result[3], result[1] / result[3], result[2] / result[3], 1.0);
+        return new Vector4(result[0] / result[3], result[1] / result[3], result[2] / result[3]);
     }
 
     /**
