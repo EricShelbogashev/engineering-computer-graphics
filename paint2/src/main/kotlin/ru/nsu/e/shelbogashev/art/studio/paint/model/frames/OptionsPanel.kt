@@ -51,7 +51,7 @@ internal class OptionsPanel(context: ApplicationContext) : JPanel() {
 
         // Small Radius
         addComponent(JLabel(StringResource.loadString("dialogue_options_label_inner_radius", context.properties.locale)), 4, 0, 1, gbc)
-        smallRadiusSlider = createSlider(0, 100, 20, 1)
+        smallRadiusSlider = createSlider(0, 50, 20, 1)
         addComponent(smallRadiusSlider, 4, 1, 1, gbc)
         smallRadiusSpinner = createSpinner(SpinnerNumberModel(20, 0, 100, 1), 4, 2, gbc)
 
@@ -88,11 +88,37 @@ internal class OptionsPanel(context: ApplicationContext) : JPanel() {
         }
     }
 
+    private fun setupBigRadiusChangeListener(
+        slider: JSlider,
+        spinner: JSpinner,
+        smallSpinner: JSpinner,
+        smallSlider: JSlider
+    ) {
+        slider.addChangeListener {
+            spinner.value = slider.value
+            smallSlider.maximum = slider.value
+
+            if (slider.value > smallSpinner.value as Int) {
+                smallSpinner.value = smallSlider.value
+            }
+            smallSpinner.model = SpinnerNumberModel(smallSpinner.value as Int, 0, slider.value, 1)
+        }
+        spinner.addChangeListener {
+            slider.value = spinner.value as Int
+            smallSlider.maximum = slider.value
+
+            if (slider.value > smallSpinner.value as Int) {
+                smallSpinner.value = smallSlider.value
+            }
+            smallSpinner.model = SpinnerNumberModel(smallSpinner.value as Int, 0, slider.value, 1)
+        }
+    }
+
     private fun setupChangeListeners() {
         setupChangeListener(penSlider, penSizeSpinner)
         setupChangeListener(vertexSlider, vertexSpinner)
         setupChangeListener(angleSlider, angleSpinner)
-        setupChangeListener(bigRadiusSlider, bigRadiusSpinner)
+        setupBigRadiusChangeListener(bigRadiusSlider, bigRadiusSpinner, smallRadiusSpinner, smallRadiusSlider)
         setupChangeListener(smallRadiusSlider, smallRadiusSpinner)
     }
 

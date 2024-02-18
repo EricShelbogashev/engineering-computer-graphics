@@ -124,6 +124,8 @@ class ActionHandlers {
                 )
             }
         }
+        val menuOptions = ComponentRegistry.findById<JMenuItem>("menu_tools_button_tune")
+        menuOptions.addActionListener(options.actionListeners[0])
 
         val palletButton = ComponentRegistry.findById<JButton>("toolbar_button_palette")
         palletButton.addActionListener {

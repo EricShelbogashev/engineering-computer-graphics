@@ -69,7 +69,8 @@ class MenuBarInitializer {
             MenuItemConfig("menu_tools_button_fill", "menu_tools_button_fill", isRadioButton = true),
             MenuItemConfig("menu_tools_button_eraser", "menu_tools_button_eraser", isRadioButton = true),
             MenuItemConfig("menu_tools_button_clear", "menu_tools_button_clear"),
-            MenuItemConfig("menu_tools_button_resize", "menu_tools_button_resize")
+            MenuItemConfig("menu_tools_button_resize", "menu_tools_button_resize"),
+            MenuItemConfig("menu_tools_button_tune", "menu_tools_button_tune")
         )
         val toolsGroup = ButtonGroup()
         val viewMenu = addMenuItems(

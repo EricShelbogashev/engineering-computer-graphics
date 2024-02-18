@@ -9,6 +9,7 @@ import ru.nsu.e.shelbogashev.art.studio.paint.initializer.ToolBarInitializer
 import ru.nsu.e.shelbogashev.art.studio.paint.model.DrawField
 import ru.nsu.e.shelbogashev.art.studio.paint.model.support.StringResource
 import java.awt.BorderLayout
+import java.awt.Dimension
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.util.*
@@ -18,6 +19,7 @@ import javax.swing.JScrollPane
 import javax.swing.SwingUtilities
 import kotlin.system.exitProcess
 
+
 class PaintApplication(private val properties: ApplicationProperties) : JFrame(properties.windowTitle) {
     private val components: ApplicationComponents
     private val context: ApplicationContext
@@ -25,10 +27,16 @@ class PaintApplication(private val properties: ApplicationProperties) : JFrame(p
     init {
         locale = properties.locale
         val field = DrawField()
+        this.size = properties.windowSize
+        field.preferredSize = Dimension(this.size.width, this.size.height);
+
         components = ApplicationComponents(
             toolbar = ToolBarInitializer().initToolBar(this),
             menubar = MenuBarInitializer().initMenuBar(this),
-            scrollPane = JScrollPane(field),
+            scrollPane = JScrollPane(field).apply {
+                this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            },
             field = field
         )
         context = ApplicationContext(properties, components)
@@ -71,7 +79,7 @@ class PaintApplication(private val properties: ApplicationProperties) : JFrame(p
         fun main(args: Array<String>) {
             FlatMacLightLaf.setup()
             // Можно добавить сохраняемость настроек.
-            val appProperties = ApplicationProperties(locale = Locale.of("en"))
+            val appProperties = ApplicationProperties(locale = Locale.of("ru"))
             SwingUtilities.invokeLater { PaintApplication(appProperties) }
         }
     }

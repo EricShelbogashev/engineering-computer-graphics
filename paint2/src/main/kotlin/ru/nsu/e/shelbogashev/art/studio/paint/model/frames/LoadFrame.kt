@@ -45,6 +45,7 @@ class LoadFrame(private val drawField: DrawField, private val context: Applicati
                 return
             }
             drawField.setImage(newImage)
+            drawField.resizeImage(newImage.width, newImage.height)
         }
     }
 }
