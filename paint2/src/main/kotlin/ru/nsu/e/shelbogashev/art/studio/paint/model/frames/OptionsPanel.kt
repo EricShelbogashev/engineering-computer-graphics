@@ -30,31 +30,40 @@ internal class OptionsPanel(context: ApplicationContext) : JPanel() {
         penSlider = createSlider(1, 20, 5, 1)
         addComponent(penSlider, 0, 1, 1, gbc)
         penSizeSpinner = createSpinner(SpinnerNumberModel(5, 1, 20, 1), 0, 2, gbc)
+        penSizeSpinner.toolTipText = "[1-20]"
+        penSlider.toolTipText = "[1-20]"
 
         // Polygon vertices
         addComponent(JLabel(StringResource.loadString("dialogue_options_label_regular_vertices_number", context.properties.locale)), 1, 0, 1, gbc)
         vertexSlider = createSlider(3, 16, 5, 1)
         addComponent(vertexSlider, 1, 1, 1, gbc)
         vertexSpinner = createSpinner(SpinnerNumberModel(5, 3, 16, 1), 1, 2, gbc)
+        vertexSlider.toolTipText = "[3-16]"
+        vertexSpinner.toolTipText = "[3-16]"
 
         // Angle
         addComponent(JLabel(StringResource.loadString("dialogue_options_label_rotation_angle", context.properties.locale)), 2, 0, 1, gbc)
         angleSlider = createSlider(0, 360, 0, 1)
         addComponent(angleSlider, 2, 1, 1, gbc)
         angleSpinner = createSpinner(SpinnerNumberModel(0, 0, 360, 1), 2, 2, gbc)
+        angleSpinner.toolTipText = "[0-360]"
+        angleSlider.toolTipText = "[0-360]"
 
         // Big Radius
         addComponent(JLabel(StringResource.loadString("dialogue_options_label_outer_radius", context.properties.locale)), 3, 0, 1, gbc)
         bigRadiusSlider = createSlider(0, 100, 50, 1)
         addComponent(bigRadiusSlider, 3, 1, 1, gbc)
         bigRadiusSpinner = createSpinner(SpinnerNumberModel(50, 0, 100, 1), 3, 2, gbc)
+        bigRadiusSpinner.toolTipText = "[0-100]"
+        bigRadiusSlider.toolTipText = "[0-100]"
 
         // Small Radius
         addComponent(JLabel(StringResource.loadString("dialogue_options_label_inner_radius", context.properties.locale)), 4, 0, 1, gbc)
         smallRadiusSlider = createSlider(0, 50, 20, 1)
         addComponent(smallRadiusSlider, 4, 1, 1, gbc)
         smallRadiusSpinner = createSpinner(SpinnerNumberModel(20, 0, 100, 1), 4, 2, gbc)
-
+        smallRadiusSpinner.toolTipText = "[0,100]"
+        smallRadiusSlider.toolTipText = "[0,100]"
         // Setup change listeners
         setupChangeListeners()
     }

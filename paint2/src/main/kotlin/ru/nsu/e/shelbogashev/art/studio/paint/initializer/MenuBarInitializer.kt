@@ -96,9 +96,9 @@ class MenuBarInitializer {
 
         // Resize dialogue
         val resizeDialogue = JPanel().apply {
-            val widthModel = SpinnerNumberModel(640, 640, 2100, 1)
+            val widthModel = SpinnerNumberModel(640, 100, 10000, 1)
             val widthField = JSpinner(widthModel)
-            val heightModel = SpinnerNumberModel(480, 480, 2000, 1)
+            val heightModel = SpinnerNumberModel(480, 100, 10000, 1)
             val heightField = JSpinner(heightModel)
             name = "dialogue_resize"
             add(JLabel(StringResource.loadString("dialogue_resize_button_width", application.locale)))
